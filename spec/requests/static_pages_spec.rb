@@ -3,45 +3,34 @@ require 'spec_helper'
 describe "Static pages" do
   # Indicate Home page as subject
   
+  subject { page }
+  
   describe "Home page" do
-    it "should have the content 'Sample App'" do
-      visit '/static_pages/home'
-      expect(page).to have_content('Sample App')    #verify 'Sample App' is there. 
-    end
+    before { visit root_path }
     
-    it "should have the title 'Home'" do            #verify base_title
-      visit '/static_pages/home'  
-      expect(page).to have_title("Ruby on Rails Tutorial Sample App")
-    end
-    
-    it "should not have a custom page title" do     #verify | Home is not on home page
-      visit '/static_pages/home'
-      expect(page).not_to have_title('| Home')
-    end
+    it { should have_content('Sample App') }    #verify 'Sample App' is there. 
+    it { should have_title(full_title('')) }
+    it { should_not have_title('| Home') }      #verify | Home is not on home page
   end
   
-  
-  describe "Help page" do                           #verify help pages has content Help
-    it "should have the content 'Help'" do
-      visit '/static_pages/help'
-      expect(page).to have_content('Help')
-    end
+  describe "Help page" do   
+    before { visit help_path }                  #verify help pages has content Help
     
-    it "should have title 'Help'" do                #verify Help page has title indicated below
-      visit '/static_pages/help'
-      expect(page).to have_title("Ruby on Rails Tutorial Sample App | Help")
-    end
+    it { should have_content('Help') }
+    it { should have_title(full_title('Help')) }   #verify Help page has title indicated below
   end
   
   describe "About page" do                          #verify about page has About Us on page
-    it "should have the content 'About Us'" do
-      visit '/static_pages/about'
-      expect(page).to have_content('About Us')
-    end
+    before { visit about_path }
     
-    it "should have the title 'About Us'" do        #verify about page has correct title
-      visit '/static_pages/about'
-      expect(page).to have_title("Ruby on Rails Tutorial Sample App | About Us")
-    end
+    it { should have_content('About Us') }
+    it { should have_title(full_title('About Us')) }  #verify about page has correct title
+  end
+  
+  describe "Contact page" do
+    before { visit contact_path }
+    
+    it { should have_content('Contact') }
+    it { should have_title(full_title('Contact')) }
   end
 end
