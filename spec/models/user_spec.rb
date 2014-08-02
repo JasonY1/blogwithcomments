@@ -14,6 +14,7 @@ describe User do                    #Describe user class app/models/user.rb
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
+  it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
                                     #
   it { should be_valid }            #
@@ -96,5 +97,10 @@ describe User do                    #Describe user class app/models/user.rb
       it { should_not eq user_for_invalid_password }      #invalid password should be invalid
       specify { expect(user_for_invalid_password).to be_false }
     end
+  end
+  
+  describe "remember token" do        #test remember token
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }  #remember token should be created before user is saved
   end
 end
